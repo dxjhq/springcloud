@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.hhly.web.config.BaseConfiguration,\
+com.hhly.web.config.HttpClientConfig

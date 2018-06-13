@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="springcloud client status"/>
+    <meta name="author" content="wangxc1112"/>
+   	<title th:text="${appName}">状态</title>
+    <style>
+      body{
+        background-color:#000000;
+        color: #FFFFFF
+      }
+      h1{
+        font-size: 72px;
+        font-family:"Times New Roman";
+      }
+      p{
+        font-size: 56px;
+        font-family:"Verdana";
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div>
+      <table style="width:100%;border:0px" align="center">
+        <tr>
+          <td style="text-align:center;padding-top:8%">
+            <h1 th:text="'服务【' + ${appName} + '】启动成功！'"></h1>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table style="border:0px #FFFFFF solid;width:40%;padding:10px" align="center">
+              <tr>
+                <td>
+                  <p th:text="'application_profile: '+${active}"></p>
+                  <p th:text="'config_profile: '+${profile}"></p>
+                  <p th:text="'config_label: '+${label}"></p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </body>
+</html>
