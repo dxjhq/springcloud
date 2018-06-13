@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/businesscomm/businesscomm.iml" filepath="$PROJECT_DIR$/businesscomm/businesscomm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ly-api/ly-api.iml" filepath="$PROJECT_DIR$/ly-api/ly-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ly-jdbc/ly-jdbc.iml" filepath="$PROJECT_DIR$/ly-jdbc/ly-jdbc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ly-parent/ly-parent.iml" filepath="$PROJECT_DIR$/ly-parent/ly-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ly-utils/ly-utils.iml" filepath="$PROJECT_DIR$/ly-utils/ly-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ly-web/ly-web.iml" filepath="$PROJECT_DIR$/ly-web/ly-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platform.iml" filepath="$PROJECT_DIR$/platform.iml" />
+    </modules>
+  </component>
+</project>

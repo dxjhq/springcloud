@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.schedule.mapper.TaskExecuteLogMapper">
+  <resultMap id="BaseResultMap" type="com.hhly.schedule.entity.TaskExecuteLog">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="TASK_ID" jdbcType="INTEGER" property="taskId" />
+    <result column="SCHEDULE_START_TIME" jdbcType="TIMESTAMP" property="scheduleStartTime" />
+    <result column="SCHEDULE_END_TIME" jdbcType="TIMESTAMP" property="scheduleEndTime" />
+    <result column="SCHEDULE_EXCEPTION_MSG" jdbcType="VARCHAR" property="scheduleExceptionMsg" />
+    <result column="SCHEDULE_EXECUTE_RESULT" jdbcType="TINYINT" property="scheduleExecuteResult" />
+    <result column="EXECUTE_LOG" jdbcType="VARCHAR" property="executeLog" />
+    <result column="TRIGGER_WAY" jdbcType="TINYINT" property="triggerWay" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+    <result column="IS_DELETE" jdbcType="TINYINT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, TASK_ID, SCHEDULE_START_TIME, SCHEDULE_END_TIME,  SCHEDULE_EXCEPTION_MSG,
+    SCHEDULE_EXECUTE_RESULT, EXECUTE_LOG, TRIGGER_WAY, CREATE_TIME, CREATE_USER, UPDATE_TIME, 
+    UPDATE_USER, IS_DELETE
+  </sql>
+  <sql id="Base_Table">
+    TASK_EXECUTE_LOG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from <include refid="Base_Table" />
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectSelective" parameterType="com.hhly.schedule.entity.TaskExecuteLog" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM <include refid="Base_Table" />
+    WHERE 1=1
+    <where>
+      <if test="taskId != null">
+         and TASK_ID = #{taskId,jdbcType=INTEGER}
+      </if>
+      <if test="scheduleStartTime != null">
+         and SCHEDULE_START_TIME = #{scheduleStartTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="scheduleEndTime != null">
+         and SCHEDULE_END_TIME = #{scheduleEndTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="scheduleExceptionMsg != null">
+         and SCHEDULE_EXCEPTION_MSG = #{scheduleExceptionMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="scheduleExecuteResult != null">
+         and SCHEDULE_EXECUTE_RESULT = #{scheduleExecuteResult,jdbcType=TINYINT}
+      </if>
+      <if test="executeLog != null">
+         and EXECUTE_LOG = #{executeLog,jdbcType=VARCHAR}
+      </if>
+      <if test="triggerWay != null">
+         and TRIGGER_WAY = #{triggerWay,jdbcType=TINYINT}
+      </if>
+      <if test="createTime != null">
+         and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createUser != null">
+         and CREATE_USER = #{createUser,jdbcType=VARCHAR}
+      </if>
+      <if test="updateTime != null">
+         and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateUser != null">
+         and UPDATE_USER = #{updateUser,jdbcType=VARCHAR}
+      </if>
+      <if test="isDelete != null">
+         and IS_DELETE = #{isDelete,jdbcType=TINYINT}
+      </if>
+    </where>
+  </select>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    UPDATE <include refid="Base_Table" />
+    SET IS_DELETE=1
+    WHERE ID = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertSelective" parameterType="com.hhly.schedule.entity.TaskExecuteLog">
+    insert into <include refid="Base_Table" />
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="taskId != null">
+        TASK_ID,
+      </if>
+      <if test="scheduleStartTime != null">
+        SCHEDULE_START_TIME,
+      </if>
+      <if test="scheduleEndTime != null">
+        SCHEDULE_END_TIME,
+      </if>
+      <if test="scheduleExceptionMsg != null">
+        SCHEDULE_EXCEPTION_MSG,
+      </if>
+      <if test="scheduleExecuteResult != null">
+        SCHEDULE_EXECUTE_RESULT,
+      </if>
+      <if test="executeLog != null">
+        EXECUTE_LOG,
+      </if>
+      <if test="triggerWay != null">
+        TRIGGER_WAY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="scheduleStartTime != null">
+        #{scheduleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scheduleEndTime != null">
+        #{scheduleEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scheduleExceptionMsg != null">
+        #{scheduleExceptionMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="scheduleExecuteResult != null">
+        #{scheduleExecuteResult,jdbcType=TINYINT},
+      </if>
+      <if test="executeLog != null">
+        #{executeLog,jdbcType=VARCHAR},
+      </if>
+      <if test="triggerWay != null">
+        #{triggerWay,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hhly.schedule.entity.TaskExecuteLog">
+    update <include refid="Base_Table" />
+    <set>
+      <if test="taskId != null">
+        TASK_ID = #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="scheduleStartTime != null">
+        SCHEDULE_START_TIME = #{scheduleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scheduleEndTime != null">
+        SCHEDULE_END_TIME = #{scheduleEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scheduleExceptionMsg != null">
+        SCHEDULE_EXCEPTION_MSG = #{scheduleExceptionMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="scheduleExecuteResult != null">
+        SCHEDULE_EXECUTE_RESULT = #{scheduleExecuteResult,jdbcType=TINYINT},
+      </if>
+      <if test="executeLog != null">
+        EXECUTE_LOG = #{executeLog,jdbcType=VARCHAR},
+      </if>
+      <if test="triggerWay != null">
+        TRIGGER_WAY = #{triggerWay,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE = #{isDelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getLastExecuteLogByTask" resultMap="BaseResultMap" parameterType="Long">
+    SELECT <include refid="Base_Column_List" />
+    FROM <include refid="Base_Table" />
+    WHERE task_id = #{taskId} and id = (SELECT MAX(id) FROM <include refid="Base_Table" /> )
+  </select>
+
+  <select id="getLastSuccessLogByTask" resultMap="BaseResultMap" parameterType="Long">
+    SELECT <include refid="Base_Column_List" />
+    FROM <include refid="Base_Table" />
+    WHERE TASK_ID = #{taskId} and id = (SELECT MAX(id) FROM <include refid="Base_Table" /> WHERE schedule_status = 1 and enabled_flag = 1)
+  </select>
+
+  <select id="selectWithPage" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM <include refid="Base_Table" />
+    WHERE IS_DELETE = 0
+    <if test="condition.taskName != null">
+      AND TASK_NAME LIKE concat('%',#{condition.taskName},'%')
+    </if>
+    <if test="condition.taskGroup != null">
+      AND TASK_GROUP = #{condition.taskGroup,jdbcType=VARCHAR}
+    </if>
+    <if test="condition.taskId != null">
+      AND TASK_ID = #{condition.taskId,jdbcType=INTEGER}
+    </if>
+    <if test="condition.createStartTime != null">
+      AND CREATE_TIME &gt;= str_to_date(#{condition.createStartTime}, '%Y-%m-%d %H:%i:%s')
+    </if>
+    <if test="condition.createEndTime != null">
+      AND CREATE_TIME &lt;= str_to_date(#{condition.createEndTime}, '%Y-%m-%d %H:%i:%s')
+    </if>
+  </select>
+</mapper>

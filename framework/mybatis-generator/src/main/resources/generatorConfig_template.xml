@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--数据库驱动,本版本POM中有自带-->
+    <!--    <classPathEntry   location="E:\\workspace\\mybatis-generator_run\\mysql-connector-java-5.6.jar"/>-->
+    <!-- 引入配置文件 -->
+    <properties resource="generatorConfig.properties"/>
+    <context id="mysqlTables" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!--生成dao的插件-->
+        <plugin type="org.mybatis.generator.plugins.MybatisDaoPlugin">
+            <property name="targetPackage" value="${dao.package}"/>
+            <property name="targetProject" value="${dao.path}"/>
+            <property name="superClass" value="com.hhly.common.dao.AbstractBaseDao"/>
+        </plugin>
+
+        <!--数据库链接地址账号密码,切记别忘了后面的字符编码,不然entity里的中文注释会乱码-->
+        <jdbcConnection
+                driverClass="${jdbc.dataSource.driverClassName}"
+                connectionURL="${jdbc.dataSource.url}"
+                userId="${jdbc.dataSource.username}"
+                password="${jdbc.dataSource.password}">
+        </jdbcConnection>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+                NUMERIC 类型解析为java.math.BigDecimal -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--生成Model类存放位置-->
+        <javaModelGenerator targetPackage="${model.package}" targetProject="${model.path}">
+            <property name="enableSubPackages" value="true"/>
+            <!--对属性值进行trim处理-->
+            <property name="trimStrings" value="true"/>
+            <!--支持Lombok-->
+            <property name="supportLombok" value="true"/>
+            <!--会被实体类继承-->
+            <property name="rootClass" value="com.hhly.common.entity.BaseEntity"/>
+        </javaModelGenerator>
+
+        <!--生成映射文件存放位置-->
+        <sqlMapGenerator targetPackage="${mapper.xml.package}" targetProject="${mapper.xml.path}">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--生成mapper类存放位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${mapper.package}" targetProject="${mapper.path}">
+            <property name="enableSubPackages" value="true"/>
+            <property name="rootInterface" value="com.hhly.common.dao.BaseMapper"/>
+        </javaClientGenerator>
+
+        <!--===============我是优雅的分割线, 以下是您需要编辑的地方,上面的就不要随便动了========================-->
+
+        <!--生成对应表及类名-->
+        <table tableName="T_ROLE" domainObjectName="Role"></table>
+
+        <!--
+        以下table属性默认是不启用的
+        enableSelectByExample="false"
+        enableCountByExample="false"
+        enableUpdateByExample="false"
+        enableDeleteByExample="false"
+        selectByExampleQueryId="false"
+        enableInsert="false"
+        -->
+
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,38 @@
+scheduled.sync.session.cron: 0 0/10 * * * *
+#web端用户会话过期时间，单位是秒
+webuser.session.timeout: 7200
+#app端用户会话过期时间，单位是秒
+appuser.session.timeout: 2592000
+
+security:
+  basic:
+    enabled: false
+
+auth:
+  filter:
+    apiUrl: /api/**
+    portalUrl: /portal/**, /protected/**
+    loginUrl: /accessToken
+    logoutUrl: /logout
+    logoutSuccessUrl: /
+
+zuul:
+  routes:
+    user:
+      path: /user/**
+      serviceId: user
+    user1:
+      path: /user1/**
+      serviceId: user1
+    manage:
+      path: /manage/**
+      serviceId: backstage-management-ui
+    pay:
+      path: /pay/**
+      serviceId: pay
+
+spring.datasource.url: jdbc:mysql://192.168.10.224:3306/userinfo
+spring.datasource.username: root
+spring.datasource.password: root
+spring.datasource.testWhileIdle: true
+spring.datasource.validationQuery: SELECT 1

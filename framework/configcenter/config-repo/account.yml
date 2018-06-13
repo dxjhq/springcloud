@@ -1,0 +1,18 @@
+server:
+  port: 23301
+
+spring:
+#  application:
+#    name: account
+#    index: 0
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/accountinfo
+    username: root
+    password: 123456
+    testWhileIdle: true
+    validationQuery: SELECT 1
+
+
+
+

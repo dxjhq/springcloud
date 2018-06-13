@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.hhly.tx.config.TaskExecutorProperties,\
+com.hhly.tx.componet.TxAspect,\
+com.hhly.tx.componet.PublishConfig

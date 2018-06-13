@@ -1,0 +1,40 @@
+# 安全认证的配置
+security:
+  basic:
+    enabled: true
+  user:
+    name: chssfaa  # 用户名
+    password: chaiswwww123456   # 用户密码
+
+spring:
+  application:
+    name: transmonitor
+    index: 0
+  cloud:
+    config:
+      profile: prod
+      label: develop
+      fail-fast: true
+      discovery:
+        enabled: true # 默认false，true表示使用注册中心的config server配置
+        service-id: configs
+      username: ${security.user.name}
+      password: ${security.user.password}
+
+
+
+
+eureka:
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    statusPageUrlPath: /status
+    healthCheckUrlPath: /admin/health
+  client:
+    serviceUrl:
+#      defaultZone: http://${security.user.name}:${security.user.password}@localhost:${server.port}/eureka/
+      defaultZone: http://${security.user.name}:${security.user.password}@10.37.61.34:1111/eureka/,http://${security.user.name}:${security.user.password}@10.37.61.36:1111/eureka/
+
+# 默认会去找 classpath 下的 logback.xml. 为了达到 profile 的目的故意不用这个文件名
+# 默认会去找 classpath 下的 logback.xml. 为了达到 profile 的目的故意不用这个文件名
+logging.config: classpath:log-prod.xml

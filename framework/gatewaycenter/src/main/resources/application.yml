@@ -1,0 +1,112 @@
+server:
+  port: 18765
+
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone: http://${eureka.instance.hostname:eureka.hhly.com}:${eureka.server.port:18761}/eureka/
+      defaultZone: http://localhost:18761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+info:
+  component: Zuul Server
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+salt: fa690ab5658c40889f0e732689bd8411
+
+security:
+  basic:
+    enabled: false
+
+scheduled.sync.session.cron: 0 0/1 * * * *
+#web端用户会话过期时间，单位是秒
+webuser.session.timeout: 7200
+#app端用户会话过期时间，单位是秒
+appuser.session.timeout: 2678400
+
+auth:
+  filter:
+    apiUrl: /api/**
+    portalUrl: /portal/**, /protected/**
+    loginUrl: /cas/index.html
+    logoutUrl: /logout
+    logoutSuccessUrl: /
+
+#CAS服务地址
+cas.server:
+  prefixUrl: http://mdmuat.einwin.com/sso/
+  loginUrl: ${cas.server.prefixUrl}login
+
+gateway.service:
+  pac4jBaseUrl: http://localhost:${server.port}/
+  callbackUrl: ${gateway.service.pac4jBaseUrl}callback
+
+zuul:
+  routes:
+    user:
+      path: /user/**
+      serviceId: user
+    pay:
+      path: /pay/**
+      serviceId: pay
+
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  profiles:
+    active: test
+  redis:
+    host: redis.hhlz.com
+    port: 6380
+    password:
+    database: 6
+    timeout: 30000
+    pool:
+      max-active: 20
+      max-idle: 5
+
+#spring:
+#  zipkin:
+#    baseUrl: zipkin.einwin.com
+#  sleuth:
+#    sampler:
+#      percentage: 1.0
+
+#spring.rabbitmq:
+#  host: mq.einwin.com
+#  port: 5672
+#  username: admin
+#  password: admin
+
+hystrix:
+  threadpool:
+    default:
+      coreSize: 100
+      maxQueueSize: -1
+      queueSizeRejectionThreshold: 5
+  command:
+    default:
+      circuitBreaker:
+        sleepWindowInMilliseconds: 30000
+        requestVolumeThreshold: 20
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 30000
+
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000

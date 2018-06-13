@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: schedule-demo
+    index: 0
+#  cloud:
+#    config:
+#      uri: ${CONFIG_SERVER_URI:http://192.168.10.224:18986}
+##      env: default
+##      label: developer
+#      profile: test
+##      env: test
+#      label: develop
+#      failFast: true
+
+encrypt:
+  failOnError: true
+
+# 默认会去找 classpath 下的 logback.xml. 为了达到 profile 的目的故意不用这个文件名
+logging.config: classpath:log-test.xml

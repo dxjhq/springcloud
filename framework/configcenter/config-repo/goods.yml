@@ -1,0 +1,17 @@
+server:
+  port: 23201
+
+spring:
+  application:
+    name: goods
+    index: 0
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/goods-center
+    username: root
+    password: 123456
+    testWhileIdle: true
+    validationQuery: SELECT 1
+
+
+

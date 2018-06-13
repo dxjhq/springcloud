@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.schedule.mapper.TaskInfoMapper">
+  <resultMap id="BaseResultMap" type="com.hhly.schedule.entity.TaskInfo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="TASK_NAME" jdbcType="VARCHAR" property="taskName" />
+    <result column="TASK_GROUP" jdbcType="VARCHAR" property="taskGroup" />
+    <result column="REMOTE_SERVICE_NAME" jdbcType="VARCHAR" property="remoteServiceName" />
+    <result column="REMOTE_PATH" jdbcType="VARCHAR" property="remotePath" />
+    <result column="REMOTE_METHOD" jdbcType="VARCHAR" property="remoteMethod" />
+    <result column="TASK_STATUS" jdbcType="TINYINT" property="taskStatus" />
+    <result column="CRON_EXPRESSION" jdbcType="VARCHAR" property="cronExpression" />
+    <result column="EXECUTE_STATUS" jdbcType="TINYINT" property="executeStatus" />
+    <result column="EXECUTE_PARAM" jdbcType="VARCHAR" property="executeParam" />
+    <result column="EXECUTE_PARAM_API" jdbcType="VARCHAR" property="executeParamApi" />
+    <result column="PRE_EXECUTE_TIME" jdbcType="TIMESTAMP" property="preExecuteTime" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+    <result column="IS_DELETE" jdbcType="TINYINT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, TASK_NAME, TASK_GROUP, REMOTE_SERVICE_NAME, REMOTE_PATH, REMOTE_METHOD, TASK_STATUS,
+    CRON_EXPRESSION, EXECUTE_PARAM, EXECUTE_PARAM_API, DESCRIPTION, CREATE_TIME, CREATE_USER,
+    UPDATE_TIME, UPDATE_USER, IS_DELETE
+  </sql>
+  <sql id="Base_Table">
+    TASK_INFO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from <include refid="Base_Table" />
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectSelective" parameterType="com.hhly.schedule.entity.TaskInfo" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM <include refid="Base_Table" />
+    WHERE 1=1
+    <where>
+      <if test="taskName != null">
+         and TASK_NAME = #{taskName,jdbcType=VARCHAR}
+      </if>
+      <if test="taskGroup != null">
+         and TASK_GROUP = #{taskGroup,jdbcType=VARCHAR}
+      </if>
+      <if test="remoteServiceName != null">
+         and REMOTE_SERVICE_NAME = #{remoteServiceName,jdbcType=VARCHAR}
+      </if>
+      <if test="remotePath != null">
+         and REMOTE_PATH = #{remotePath,jdbcType=VARCHAR}
+      </if>
+      <if test="taskStatus != null">
+         and TASK_STATUS = #{taskStatus,jdbcType=TINYINT}
+      </if>
+      <if test="executeStatus != null">
+        and EXECUTE_STATUS = #{executeStatus,jdbcType=TINYINT}
+      </if>
+      <if test="cronExpression != null">
+         and CRON_EXPRESSION = #{cronExpression,jdbcType=VARCHAR}
+      </if>
+      <if test="executeParam != null">
+         and EXECUTE_PARAM = #{executeParam,jdbcType=VARCHAR}
+      </if>
+      <if test="executeParamApi != null">
+         and EXECUTE_PARAM_API = #{executeParamApi,jdbcType=VARCHAR}
+      </if>
+      <if test="preExecuteTime != null">
+        and PRE_EXECUTE_TIME = #{preExecuteTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="description != null">
+         and DESCRIPTION = #{description,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null">
+         and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createUser != null">
+         and CREATE_USER = #{createUser,jdbcType=VARCHAR}
+      </if>
+      <if test="updateTime != null">
+         and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateUser != null">
+         and UPDATE_USER = #{updateUser,jdbcType=VARCHAR}
+      </if>
+      <if test="isDelete != null">
+         and IS_DELETE = #{isDelete,jdbcType=TINYINT}
+      </if>
+    </where>
+  </select>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    UPDATE <include refid="Base_Table" />
+    SET IS_DELETE=1
+    WHERE ID = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertSelective" parameterType="com.hhly.schedule.entity.TaskInfo">
+    insert into <include refid="Base_Table" />
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="taskName != null">
+        TASK_NAME,
+      </if>
+      <if test="taskGroup != null">
+        TASK_GROUP,
+      </if>
+      <if test="remoteServiceName != null">
+        REMOTE_SERVICE_NAME,
+      </if>
+      <if test="remotePath != null">
+        REMOTE_PATH,
+      </if>
+      <if test="remoteMethod != null">
+        REMOTE_METHOD,
+      </if>
+      <if test="taskStatus != null">
+        TASK_STATUS,
+      </if>
+      <if test="executeStatus != null">
+        EXECUTE_STATUS,
+      </if>
+      <if test="cronExpression != null">
+        CRON_EXPRESSION,
+      </if>
+      <if test="executeParam != null">
+        EXECUTE_PARAM,
+      </if>
+      <if test="preExecuteTime != null">
+        PRE_EXECUTE_TIME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="taskName != null">
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskGroup != null">
+        #{taskGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteServiceName != null">
+        #{remoteServiceName,jdbcType=VARCHAR},
+      </if>
+      <if test="remotePath != null">
+        #{remotePath,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteMethod != null">
+        #{remoteMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="taskStatus != null">
+        #{taskStatus,jdbcType=TINYINT},
+      </if>
+      <if test="executeStatus != null">
+        #{executeStatus,jdbcType=TINYINT},
+      </if>
+      <if test="cronExpression != null">
+        #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="executeParam != null">
+        #{executeParam,jdbcType=VARCHAR},
+      </if>
+      <if test="executeParamApi != null">
+        #{executeParamApi,jdbcType=VARCHAR},
+      </if>
+      <if test="preExecuteTime != null">
+        #{preExecuteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hhly.schedule.entity.TaskInfo">
+    update <include refid="Base_Table" />
+    <set>
+      <if test="taskName != null">
+        TASK_NAME = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskGroup != null">
+        TASK_GROUP = #{taskGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteServiceName != null">
+        REMOTE_SERVICE_NAME = #{remoteServiceName,jdbcType=VARCHAR},
+      </if>
+      <if test="remotePath != null">
+        REMOTE_PATH = #{remotePath,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteMethod != null">
+        REMOTE_METHOD = #{remoteMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="taskStatus != null">
+        TASK_STATUS = #{taskStatus,jdbcType=TINYINT},
+      </if>
+      <if test="executeStatus != null">
+        EXECUTE_STATUS = #{executeStatus,jdbcType=TINYINT},
+      </if>
+      <if test="cronExpression != null">
+        CRON_EXPRESSION = #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="executeParam != null">
+        EXECUTE_PARAM = #{executeParam,jdbcType=VARCHAR},
+      </if>
+      <if test="executeParamApi != null">
+        EXECUTE_PARAM_API = #{executeParamApi,jdbcType=VARCHAR},
+      </if>
+      <if test="preExecuteTime != null">
+        PRE_EXECUTE_TIME = #{preExecuteTime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        IS_DELETE = #{isDelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectUniqueness" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" />
+    from <include refid="Base_Table"/>
+    WHERE IS_DELETE = 0 AND TASK_NAME = #{taskName, jdbcType=VARCHAR}
+  </select>
+  <update id="updatePreExecuteTime" parameterType="java.lang.Integer">
+    UPDATE <include refid="Base_Table" />
+    SET PRE_EXECUTE_TIME=CURRENT_TIMESTAMP
+    WHERE ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectWithPage" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM <include refid="Base_Table" />
+    WHERE IS_DELETE = 0
+    <if test="condition.taskName != null">
+      AND TASK_NAME LIKE concat('%',#{condition.taskName},'%')
+    </if>
+    <if test="condition.taskGroup != null">
+      AND TASK_GROUP = #{condition.taskGroup,jdbcType=VARCHAR}
+    </if>
+    <if test="condition.remoteServiceName != null">
+      AND REMOTE_SERVICE_NAME = #{condition.remoteServiceName,jdbcType=VARCHAR}
+    </if>
+    <if test="condition.createStartTime != null">
+      AND CREATE_TIME &gt;= str_to_date(#{condition.createStartTime}, '%Y-%m-%d %H:%i:%s')
+    </if>
+    <if test="condition.createEndTime != null">
+      AND CREATE_TIME &lt;= str_to_date(#{condition.createEndTime}, '%Y-%m-%d %H:%i:%s')
+    </if>
+  </select>
+</mapper>

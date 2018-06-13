@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.hhly.cache.config.RedisConfig,\
+com.hhly.cache.config.RedisConfigToken,\
+com.hhly.cache.config.CacheConfigurer

@@ -1,0 +1,20 @@
+server:
+  port: 23202
+
+spring:
+  application:
+    name: business-user-ui
+    index: 0
+
+  datasource:
+    url: jdbc:mysql://192.168.10.224:3306/userinfo
+    username: root
+    password: root
+    testWhileIdle: true
+    validationQuery: SELECT 1
+
+
+
+
+
+

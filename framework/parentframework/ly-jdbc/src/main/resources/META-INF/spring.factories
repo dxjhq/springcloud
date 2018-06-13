@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.hhly.jdbc.config.MybatisConfig,\
+com.hhly.jdbc.config.MybatisMapperScannerConfig

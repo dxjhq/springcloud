@@ -1,0 +1,43 @@
+server:
+  port: 18777
+
+#zipkin数据保存到数据库中需要进行如下配置
+#表示zipkin数据存储方式是mysql
+zipkin:
+  storage:
+    type: mysql
+#    type: elasticsearch
+#    elasticsearch:
+#      cluster: elasticsearch
+#      hosts: http://192.168.10.224:9200
+##      hosts: 10.20.1.11:9200,10.20.1.12:9200
+##      cluster: elasticsearch
+#      index: zipkin
+#      index-shards: 5
+#      index-replicas: 1
+
+spring:
+  sleuth:
+    enabled: false
+    sampler:
+      percentage: 1.0 #100%收集率
+  cloud:
+    stream:
+      default-binder: rabbit
+  datasource:
+      #schema[0]: classpath:/zipkin.sql
+      url: jdbc:mysql://192.168.10.224:3306/zipkin??useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      initialize: true
+      continue-on-error: true
+  rabbitmq: #rabbitmq配置
+    host: ${RABBITMQ_HOST:192.168.113.28}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:hxb}
+    password: ${RABBITMQ_PASSWORD:hxb}
+    virtual-host: /
+    listener:
+      concurrency: ${RABBITMQ_CONCURRENCY:2}
+      max-concurrency: ${RABBITMQ_MAX_CONCURRENCY:2}

@@ -1,0 +1,15 @@
+server:
+  port: 23109
+
+spring:
+  application:
+    name: pay
+    #index: 10
+
+  datasource:
+    url: jdbc:mysql://192.168.10.224:3306/pay-center
+    username: root
+    password: root
+    testWhileIdle: true
+    validationQuery: SELECT 1 
+

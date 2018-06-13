@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.hhly</groupId>
+        <artifactId>ly-parent</artifactId>
+        <version>3.1.0.1</version>
+        <relativePath>../ly-parent</relativePath>
+    </parent>
+
+    <artifactId>businesscomm</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ly-utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!--&lt;!&ndash; 其他项目组的包(会员中心) &ndash;&gt;-->
+        <dependency>
+            <groupId>com.hhly</groupId>
+            <artifactId>membercenter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- 其他项目组的包(支付调用, 包含上面的 微信支付, may be ?) -->
+        <dependency>
+            <groupId>com.hhly</groupId>
+            <artifactId>paycenter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--&lt;!&ndash;&lt;!&ndash; 支付通知, 需要我们实现服务端 &ndash;&gt;&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.hhly</groupId>-->
+            <!--<artifactId>paynotify</artifactId>-->
+            <!--<version>1.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.mybatis.caches</groupId>
+            <artifactId>mybatis-redis</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>com.github.miemiedev</groupId>
+            <artifactId>mybatis-paginator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.41</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zeroc</groupId>
+            <artifactId>ice</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <!-- 当某天需要给其他应用提供服务时使用 ant 生成 ice 源码的相关配置 -->
+    <!--<build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target name="generate">
+                                <taskdef name="slice2java" classname="Slice2JavaTask"
+                                         classpathref="maven.plugin.classpath" />
+                                <slice2java outputdir="src/main/java">
+                                    <fileset dir="ice" includes="*.ice"/>
+                                </slice2java>
+                                <echo message=".depend 文件是为了让无变更的文件不需要再重新生成, 是一种提升性能的做法"/>
+                                <delete file="src/main/java/.depend"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>-->
+
+
+</project>

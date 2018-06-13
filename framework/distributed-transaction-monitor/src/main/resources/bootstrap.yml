@@ -1,0 +1,41 @@
+
+encrypt:
+  failOnError: true
+
+# 安全认证的配置
+security:
+  basic:
+    enabled: false
+  user:
+    name: jasonchai  # 用户名
+    password: chaisf23456   # 用户密码
+
+spring:
+  application:
+    name: transmonitor
+    index: 0
+  cloud:
+    config:
+      profile: dev
+      label: develop
+      failFast: true
+      discovery:
+         enabled: true    # 默认false，设为true表示使用注册中心中的configserver配置而不自己配置configserver的uri
+         service-id: configs
+      username: ${security.user.name}
+      password: ${security.user.password}
+
+eureka:
+  instance:
+    hostname: 192.168.113.21
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    statusPageUrlPath: /status
+    healthCheckUrlPath: /admin/health
+  client:
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@${eureka.instance.hostname}:1111/eureka/
+      #defaultZone: http://${eureka.instance.hostname}:1122/eureka
+
+# 默认会去找 classpath 下的 logback.xml. 为了达到 profile 的目的故意不用这个文件名
+logging.config: classpath:log-test.xml

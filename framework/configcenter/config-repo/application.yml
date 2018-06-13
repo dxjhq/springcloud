@@ -1,0 +1,145 @@
+spring:
+
+  jpa:
+    show-sql: false
+    hibernate:
+      naming-strategy: org.hibernate.cfg.DefaultNamingStrategy
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+        query.substitutions: true 1, false 0
+        default_batch_fetch_size: 50
+        jdbc.batch_size: 50
+        order_inserts: true
+        max_fetch_depth: 2
+        current_session_context_class: org.springframework.orm.hibernate4.SpringSessionContext
+        connection.zeroDateTimeBehavior: convertToNull
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+  resources:
+    add-mappings: true
+
+
+# 引入了 spring-boot-starter-mail 就需要设置下面的配置, 不然运行时会报错
+# org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration
+  mail:
+    host: smtp.gmail.com
+    port: 25
+    username: test
+    password: test
+
+# org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+  redis:
+    host: 192.168.10.224
+    port: 6380
+
+## org.springframework.boot.autoconfigure.session.SessionProperties
+#  session:
+#    storeType: jdbc
+#    timeout: 2592000 # 30 天. 单位: 秒 <= 30 * 24 * 60 * 60
+
+# org.springframework.boot.autoconfigure.freemarker.FreeMarkerProperties
+  freemarker.settings:
+    template_exception_handler: rethrow
+    number_format: 0.##
+
+# org.springframework.boot.autoconfigure.web.MultipartAutoConfiguration
+  http.multipart:
+    # 上传文件时最大值(默认是 1Mb)
+    maxFileSize: 10Mb
+    # 一个 method="POST" enctype="multipart/form-data" 请求域能发送的最大值(默认 10Mb)
+    maxRequestSize: 20Mb
+
+# 静态资源文件: org.springframework.boot.autoconfigure.web.ResourceProperties
+
+
+
+management:
+  context-path: /admin
+
+logging:
+  level:
+    com.netflix.discovery: 'OFF'
+    org.springframework.cloud: 'DEBUG'
+
+  config: classpath:log-prod.xml
+
+# Discovery Server Access
+eureka:
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    statusPageUrlPath: /admin/info
+    healthCheckUrlPath: /admin/health
+
+
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.10.224:1111/eureka/
+
+hystrix:
+  command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+  threadpool.default.coreSize: 10
+
+feign:
+  hystrix:
+    enabled: false
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+
+
+
+online: false
+
+
+domain:
+  index:    http://127.0.0.1:7079             # pc 端用户对应的域名
+  lawyer:   http://127.0.0.1:7078             # pc 端律师对应的域名
+  api:      http://127.0.0.1:7080             # 接口调用对应的域名, 线上走 https
+  manager:  http://127.0.0.1:7081             # 后台管理对应的域名
+
+  still:    http://192.168.10.217:1080/static # 资源文件对应的域名, css png js 等. 本地测试时连前端人员的机器
+  upload:   http://127.0.0.1/upload           # 用户上传的图片、文件目录对应的域名
+
+uploadPath: /home/admin/upload/               # 图片、文件存放地址, 此目录与上面的 domain.upload 相对应
+
+
+# 默认会去找 classpath 下的 logback.xml. 为了达到 profile 的目的故意不用这个文件名
+logging.config: classpath:log-dev.xml
+
+# 我们做为客户端, 需要连接的 ice 服务器配置信息
+ice:
+  # 会员中心
+  user:
+    cfgPath:
+    ip: 122.13.162.88
+    port: 40000
+    type: tcp
+    timeOut: 5000
+  # 支付中心
+  pay:
+    cfgPath:
+    ip: 122.13.162.88
+    port: 10010
+    type: tcp
+    timeOut: 5000
+
+
+# 第三方机器人为我们提供的接口URL信息
+lawBot:
+  crimeUrl: http://192.168.10.219:9102/lawbot/statistics/common_crimes   #罪名预测
+  caseUrl: http://192.168.10.219:9102/lawbot/similar_cases               #相似案例
+  caseDetailUrl: http://192.168.10.219:9102/lawbot/case_detail           #案件详情
+  criminalLawUrl: http://192.168.10.219:9102/lawbot/criminal_law_detail  #刑法条款信息
+

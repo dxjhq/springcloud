@@ -1,0 +1,440 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fayi Distributed Transaction</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+    <!--<link th:href="@{/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />-->
+    <link th:href="@{/css/common.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/jquery/3.2.1/jquery-3.2.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootbox.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <style>
+    body{
+        background-color: #E5E5E5;
+    }
+    ._panel{
+        margin-top: 20px;
+        margin-bottom: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    ._radio{
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    ._config_table{border-collapse:collapse}
+    ._config_table th{border:1px solid #EEEEEE;}
+    ._config_table td{
+        border:1px solid #EEEEEE;
+        padding: 5px 5px 5px 5px;
+        cursor: pointer;
+
+    }
+    ._label{
+        background-color:#EEEEEE ;
+    }
+    ._result_panel{
+        position:relative;
+        overflow-y:auto;
+        overflow-x:auto;
+        height:700px;
+        font-size: 20px;
+        font-family:Monospace;
+    }
+    ._result_tb{
+        border-collapse:collapse;
+        border-spacing:0;
+        margin:0;
+        padding:0;
+        border:none;
+    }
+    div._navbar {
+        border-top: 4px solid #6db33f;
+        background-color: #34302d;
+        margin-bottom: 0px;
+        border-bottom: 0;
+        border-left: 0;
+        border-right: 0;
+        height: 80px;
+    }
+
+    div._head{
+        float: left;
+        line-height: 76px;
+        text-align: center;
+        font-family: "montserratregular", sans-serif;
+    }
+    div._head._log{
+        font-size: 30px;
+        width: 60%;
+    }
+
+    div._head._btn{
+        color: white;
+        font-size: 14px;
+        padding-right: 20px;
+        padding-left:20px;
+    }
+    div._head._btn:hover{
+        background-color:#6db33f;
+    }
+    a._head_link{
+        text-decoration:none;
+        color: white;
+        font-family: "montserratregular", sans-serif;
+    }
+    a._head_link:hover{
+        text-decoration:none;
+        color: white;
+        font-family: "montserratregular", sans-serif;
+    }
+    div._msg_title{
+        color: #34302d;
+        font-size: 24px;
+        line-height: 30px;
+        font-family: "montserratregular", sans-serif;
+        margin-bottom: 15px;
+    }
+    table.table th{
+        background-color: #3C3834;
+        color: #f1f1f1;
+        font-weight: 400;
+        font-family: "varela_roundregular", sans-serif;
+        vertical-align: middle;
+        text-align: center;
+    }
+    table.table tbody{
+        background-color: #f1f1f1;
+    }
+    table.table tbody td{
+        border-top: 1px solid #34302d;
+        vertical-align: middle;
+        text-align: center;
+    }
+    ._bankTD{
+        background-color: #D9D3D1;
+    }
+    ._number_td{
+        border-left: 1px solid #34302d;
+        border-right: 1px solid #34302d;
+        text-align: center;
+        vertical-align: middle;
+    }
+    ._caller_td{
+        border-right: 1px solid #34302d;
+        text-align: left!important;
+        vertical-align: middle;
+    }
+    ._operation_td{
+        border-left: 1px solid #34302d;
+        border-right: 1px solid #34302d;
+        text-align: center;
+        vertical-align: middle;
+    }
+    ._op_btn.execut{
+        margin-right: 20px;
+    }
+    ._detail_td{
+        width:90px;
+        border-left: 1px solid #34302d;
+        border-bottom: 1px solid #34302d;
+        text-align: left!important;
+    }
+    ._detail_td2{
+        border-bottom: 1px solid #34302d;
+        border-right: 1px solid #34302d;
+        text-align: left!important;
+    }
+    </style>
+
+</head>
+<body>
+<div id="successAlert" class="alert alert-success hide" style="margin-top:25%;margin-left: 40%; position: fixed;width: 200px!important;">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>成功！</strong>
+</div>
+
+<div id="warningAlert" class="alert alert-warning hide" style="margin-top:25%;margin-left: 40%; position: fixed;width: 200px!important;">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>出错啦！</strong>
+</div>
+
+<div id="loading">
+    <img src="/img/loading.gif"/>
+</div>
+
+
+<div class="_navbar">
+    <div class="_head _log">
+        <span><img src="/img/fayi_log.png"/></span>
+        <span style="color: #6db33f;">&nbsp;Distributed Transaction Monitoring System</span>
+    </div>
+    <div class="_head _btn"><a class="_head_link" href="#">MESSAGE</a></div>
+    <div class="_head _btn"><a class="_head_link" href="#">TIMER</a></div>
+    <!--<div class="_head _btn"><a class="_head_link" href="#">CONFIGURE</a></div>-->
+</div>
+<div class="_panel">
+    <div class="_msg_title">
+        事务消息列表
+    </div>
+    <div class="_msg_list">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                  <th>序号</th>
+                  <th>发起方服务名&amp;消息ID</th>
+                  <th>处理方消息ID</th>
+                  <th>处理状态</th>
+                  <th>请求信息&amp;回滚设置</th>
+                  <th>创建时间</th>
+                  <th>更新时间</th>
+                  <th>回滚操作</th>
+              </tr>
+            </thead>
+            <tbody id="_tbody">
+              <tr><td colspan='9'>暂无消息</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    请求和回滚信息详情
+                </h4>
+            </div>
+            <div class="modal-body" style="word-break: break-all;word-wrap:break-word">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div style="clear: both;text-align: center;width: 10%;margin: auto">
+</div>
+<div style="position: fixed;bottom: 0px;width: 100%;background-color: #E7EFF8">
+    <h5 align="center">Designed by Wang Xianchen. Version 1.0  2017-10-25</h5>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function loadData() {
+        var param = {
+            "serviceName":""
+           // "direction":direction,
+            //"removePun":removePun,
+            //"removeBlank":removeBlank,
+            //"rows":$("input:text[name='rows']").val(),
+            ///"content":$("textarea[name='content']").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: "/monitor/query",
+            contentType:"application/json;charset=utf-8",
+            data:JSON.stringify(param),
+            //dataType:'json',
+            success: function (ret) {
+                var html ="";
+                if(ret.data != null){
+                    for(var i=0;i<ret.data.length;i++){  //rowspan
+                        var size = ret.data[i].size;
+                        var key = ret.data[i].key;
+                        var callerService = ret.data[i].callerService;
+                        for(var j=0;j<ret.data[i].arr.length;j++){
+                            var msg = ret.data[i].arr[j];
+                            html +=
+                                "<tr>"+
+                                getNumberTd(i,j,size)+
+                                getCallerTd(callerService,key,j,size)+
+                                "<td>"+msg.id+"</td>"+
+                                "<td>"+convertState(msg.state)+"</td>"+
+                                "<td onclick=\"showDetail('msg_id_"+i+"_"+j+"')\"><a href='javascript:void()'>查看明细</a>"+
+                                "<div id=\"msg_id_"+i+"_"+j+"\" style='display: none'>"+conventRequestInf(msg.txRequestInf,msg.txRollbackConf)+"</div>"+
+                                "</td>"+
+                                "<td>"+msg.createTime+"</td>"+
+                                "<td>"+msg.updateTime+"</td>"+
+                                getOperationTd(i,j,key,size)+
+                                "</tr>";
+                        }
+                        html += "<tr><td colspan='8'></td></tr>";
+                    }
+                }else{
+                    html="<tr><td colspan='8'>暂无消息</td></tr>";
+                }
+                $("#_tbody").html(html);
+                $("#loading").fadeOut(0);
+            },
+            error: function (data) {
+                $("#loading").fadeOut(0);
+                showTips(false);
+            }
+        });
+    }
+    function convertState(stateCode){
+        if(stateCode ==0){
+            return "待执行";
+        }else if(stateCode ==1){
+            return "成功";
+        }else if(stateCode ==2){
+            return "失败";
+        }
+    }
+    function getNumberTd(i,j,size){
+        if(j==0){
+            return "<td rowspan='"+size+"' class='_number_td'>"+(i+1)+"</td>";
+        }
+        return "";
+    }
+    function getCallerTd(callerService,key,j,size){
+        if(j==0){
+            return "<td rowspan='"+size+"' class='_caller_td'>服务名:&nbsp;"+callerService+"<br/>消息ID:&nbsp;"+key+"</td>";
+        }
+        return "";
+    }
+    function getOperationTd(i,j,key,size){
+        if(j==0){
+            return "<td rowspan='"+size+"' class='_operation_td' id='optd_"+i+"'>"+
+                "<button class='_op_btn execut' onclick=\"execut('optd_"+i+"','"+key+"');\">执行</button>"+
+                "<button class='_op_btn giveup' onclick=\"giveup('optd_"+i+"','"+key+"');\">放弃</button>"+
+                "</td>";
+        }
+        return "";
+    }
+    function conventRequestInf(req,roll) {
+        var html = "<table  class=\"table table-hover\">";
+            html += "<tr><td class='_detail_td'>请求服务: </td><td class='_detail_td2'>"+req.serviceName+"</td></tr>";
+            html += "<tr><td class='_detail_td'>请求方式: </td><td class='_detail_td2'>"+req.method+"</td></tr>";
+            html += "<tr><td class='_detail_td'>请求路径: </td><td class='_detail_td2'>"+req.url+"</td></tr>";
+            html += "<tr><td class='_detail_td'>请求方法: </td><td class='_detail_td2'>"+req.signature+"</td></tr>";
+            html += "<tr><td class='_detail_td'>请求参数: </td><td class='_detail_td2'>"+req.args+"</td></tr>";
+            html += "</table>";
+
+            html += "<table  class=\"table table-hover\">";
+            html += "<tr><td class='_detail_td'>回滚Bean: </td><td class='_detail_td2'>"+roll.beanType+"</td></tr>";
+            html += "<tr><td class='_detail_td'>回滚方法: </td><td class='_detail_td2'>"+roll.method+"</td></tr>";
+            html += "</table>";
+            return html;
+    }
+    function conventRollbackInfo(obj) {
+        var html = "回滚Bean: "+obj.beanType;
+        html += "\r回滚方法: "+obj.method;
+        return html;
+    }
+    function execut(optdId,key) {
+        $("#loading").fadeIn(0);
+        var param = {
+            "msgKey":key
+        }
+        $.ajax({
+            type: "POST",
+            url: "/monitor/execut",
+            contentType:"application/json;charset=utf-8",
+            data:JSON.stringify(param),
+            //dataType:'json',
+            success: function (ret) {
+                $("#"+optdId).html("请求已发送,请稍后刷新!");
+                $("#loading").fadeOut(0);
+            },
+            error: function (data) {
+                $("#loading").fadeOut(0);
+                showTips(false);
+            }
+
+        })
+    }
+    function giveup(optdId,key) {
+        bootbox.confirm({
+            title: "放弃回滚?",
+            message: "确定要放弃回滚操作吗?这将会删除消息!",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> 否'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> 是'
+                }
+            },
+            callback: function (result) {
+                  if(result){
+                      $("#loading").fadeIn(0);
+                      var param = {
+                          "msgKey":key
+                      }
+                      $.ajax({
+                          type: "POST",
+                          url: "/monitor/giveup",
+                          contentType:"application/json;charset=utf-8",
+                          data:JSON.stringify(param),
+                          //dataType:'json',
+                          success: function (ret) {
+                              $("#"+optdId).html("请求已发送,请稍后刷新!");
+                              $("#loading").fadeOut(0);
+                          },
+                          error: function (data) {
+                              $("#loading").fadeOut(0);
+                              showTips(false);
+                          }
+
+                  })
+                }
+            }
+       })
+    }
+    function showDetail(hideId) {
+        $('#myModal').modal('show');
+        $(".modal-body").html($("#"+hideId).html());
+    }
+    function showTips(flag) {
+        var alertId = "successAlert";
+        var alertClass = "alert alert-success";
+        if(!flag){
+            alertId = "warningAlert";
+            alertClass = "alert alert-warning";
+        }
+        $("#"+alertId).attr("class",alertClass);
+        $("#"+alertId).show();
+        $("#"+alertId).delay(2000).hide(0);
+    }
+
+    function divMask(text){
+        //$("#loading").html(text);
+        $("#loading").fadeIn(1500);
+        $("#loading").fadeOut(3500);
+    }
+
+
+
+    /***
+     * 模态框封装
+     */
+    $(function () {
+        loadData();
+    });
+
+    $("#myModal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+
+/*    $('#myModal').on('hide.bs.modal', function () {
+        alert('嘿，我听说您喜欢模态框...');
+    })*/
+
+/*    $('#myModal').on('show.bs.modal', function () {
+        $(".modal-body").html("2323");
+    })*/
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: tracker
+    index: 0
+  profiles:
+    active: release
+  cloud:
+    # Config地址来自eureka
+    config:
+      profile: release
+      label: develop
+      fail-fast: true
+      discovery:
+        enabled: true # 默认false，true表示使用注册中心的config server配置
+        service-id: configs
+
+encrypt:
+  failOnError: true
+
+# 默认会去找 classpath 下的 logback.xml. 为了达到 profile 的目的故意不用这个文件名
+logging.config: classpath:log-release.xml
+
+# 安全认证的配置
+security:
+  basic:
+    enabled: false
+  user:
+    name: jasonchai  # 用户名
+    password: chaisf23456   # 用户密码
+
+eureka:
+  instance:
+    hostname: 192.168.116.3
+    port: 1111
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    statusPageUrlPath: /admin/info
+    healthCheckUrlPath: /admin/health
+  client:
+    serviceUrl:
+      #defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+      defaultZone: http:${security.user.name}:${security.user.password}@${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+

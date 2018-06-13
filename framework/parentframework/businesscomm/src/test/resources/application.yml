@@ -1,0 +1,36 @@
+
+online: false
+
+
+druid:
+  url: jdbc:mysql://192.168.10.224:3306/lawyer-test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&statementInterceptors=com.hhly.common.util.ShowSqlInterceptor
+  userName: root
+  password: root
+  defaultAutoCommit: false
+
+
+domain:
+  index:    http://127.0.0.1:7079
+  lawyer:   http://127.0.0.1:7078
+  api:      http://127.0.0.1:7080
+  manager:  http://127.0.0.1:7081
+
+  still:    http://192.168.10.217:1080/static
+  upload:   http://127.0.0.1/upload
+
+uploadPath: /home/admin/upload/
+
+
+ice:
+  user:
+    cfgPath:
+    ip: 192.168.10.243
+    port: 40000
+    type: tcp
+    timeOut: 5000
+  pay:
+    cfgPath:
+    ip: 192.168.10.243
+    port: 10010
+    type: tcp
+    timeOut: 5000

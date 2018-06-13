@@ -1,0 +1,88 @@
+1.hbase-core  模块提供基础的Hbase操作，应用者只需要在项目中添加pom依赖：
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>hbase-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+2.在引用項目中的啓動類添加 如下配置
+@Import({
+        BaseConfiguration.class,
+        ServiceClientConfiguration.class,
+        HbaseBeanInit.class
+        })
+
+3.在Service类中添加注解引入HbaseBaseDao 对象：
+@Service
+public class StatisticsService extends AbstractBaseRestService{
+
+	//依赖注入HbaseDao对象， 泛型T 代表要操作的Hbase数据列簇(表)对象
+    @Autowired
+    public  HbaseBaseDao<T> userBehaviorHbaseBaseDao;
+
+
+    public void testServiceMethod(){
+        userBehaviorHbaseBaseDao.getObjectByFamily();
+    }
+
+}
+
+4.HbaseDao<T> 对象提供基础操作包括 增删改查创建表等操作，查询方法将查询条件作为入参传入方法：
+   /**
+     * 封装下HbaseTemplate 中put方法
+     * @param tableName 表名称
+     * @param familyName 列簇名称
+     * @param rowKey  暂时设定为UUID
+     * @param  t 要插入的列簇对应实体类内容
+     *
+     * @creater bsw
+     * @date 2017-08-28
+     */
+    public void put(String tableName,String familyName,String rowKey,T t){}
+
+   /**
+    *  按照 表名称 列簇名称，主键key 查询单条数据明细
+    *
+    * @param t_name 表名称
+    * @param rowKey 主键ID
+    * @param familyName 列簇名称
+    * @param clz 返回的Java实体类
+    *              通常对应于列簇内所有column的Java实体
+    *
+    * @return  Object  对应于列簇内所有column的Java实体对象
+    */
+   public T  getObjectByFamily(String t_name,String rowKey,String familyName,Class<T> clz) {}
+
+   /**
+    * 按 表名称 列簇名称 起始时间 查询列表数据
+    * @param t_name
+    * @param familyName
+    * @param clz
+    * @return
+    */
+   public List<T> getObjectByFamilyAndPage(String t_name, String familyName,Scan scan,Class<T> clz){}
+
+   /**
+    * @desc  按照rowKey 删除指定表指定列簇数据
+    * @author BSW
+    * @create 2017-09-09
+    * @param t_name
+    * @param rowName
+    * @param familyName
+    */
+   public void deleteRow(String t_name,String rowName,String familyName){}
+
+   /**
+    * 创建表
+    *    hbase基于列簇的存储结构特点
+    *    列簇可以水平扩展，故只创建表名称和列簇名称即可
+    *    列簇个数不能超过三个
+    * @param t_Name
+    * @param familyNames
+    *
+    * @date 2017-08-28
+    */
+   public void createTable(String t_Name,String ... familyNames){}
+
+
+
+5.詳細參照Hbase-client-demo 項目

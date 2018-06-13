@@ -1,0 +1,49 @@
+._modal_td{
+    width:100px;
+    text-align: right;
+}
+.title{
+    font-weight: 400;
+    font-size: 20px;
+    text-decoration: underline;
+    color: blue;
+    margin-bottom: 2px;
+    margin-top:5px;
+}
+
+/*加载中*/
+#loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color:#333;
+    z-index: 2000;
+    opacity: 0.25;
+    display: none;
+}
+#loading img{
+    width:400px;
+    height:300px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-top:-150px;
+    margin-left:-200px;
+    z-index: 2001;
+}
+.col-sm-2{
+    width:10%;
+}
+.col-sm-10{
+    width:89%;
+}
+.modal-footer{
+    padding: 10px;
+    text-align: right;
+}
+em {
+    font-style: normal;
+    color: #c00;
+}

@@ -1,0 +1,14 @@
+server:
+  port: 23208
+
+spring:
+  application:
+    name: statistics
+    #index: 10
+
+  datasource:
+    url: jdbc:mysql://192.168.10.224:3306/lawyer_statistics
+    username: root
+    password: root
+    testWhileIdle: true
+    validationQuery: SELECT 1 
