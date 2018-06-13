@@ -74,7 +74,3 @@ ElasticSearch整合
   - 演示截图
   - ![image]{http://192.168.10.81/framework/elastic-search-demo/blob/master/screenshots.png}
   
----
-@author: wangxianchen
-
-@date:2017/08/18
