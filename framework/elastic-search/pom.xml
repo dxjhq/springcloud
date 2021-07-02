@@ -15,7 +15,7 @@
 
     <!-- 版本控制  -->
     <properties>
-        <elasticsearch.version>5.5.2</elasticsearch.version>
+        <elasticsearch.version>6.8.15</elasticsearch.version>
         <transport.version>5.5.2</transport.version>
         <elasticsearch.plug.version>5.5.2</elasticsearch.plug.version>
         <lucene.version>6.6.0</lucene.version>
